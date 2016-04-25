@@ -23,9 +23,6 @@ plugins {
 
 
 
-//compileJava.dependsOn bowerInstall
-//clean.dependsOn bowerClean
-
 version "0.1"
 group "tweetassign_01"
 
@@ -71,8 +68,8 @@ dependencies {
 
     compile "org.grails.plugins:hibernate"
     compile "org.grails.plugins:cache"
-    compile "org.hibernate:hibernate-ehcache"
-    compile "org.grails.plugins:scaffolding"*/
+    compile "org.hibernate:hibernate-ehcache"*/
+    //compile "org.grails.plugins:scaffolding"
 
     runtime "org.grails.plugins:asset-pipeline"
 
@@ -164,6 +161,9 @@ bower {
 
 
 }
+
+compileJava.dependsOn bowerInstall
+clean.dependsOn bowerClean
 
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
