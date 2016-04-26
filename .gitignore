@@ -2,9 +2,6 @@ Thumbs.db
 .DS_Store
 .gradle
 build/
-out/
-classes/
-.asscache
 .idea
 *.iml
 *.ipr
@@ -12,5 +9,8 @@ classes/
 .project
 .settings
 .classpath
+classes
+.asscache
+TESTS-*.xml
 grails-app/assets/bower
 node_modules/

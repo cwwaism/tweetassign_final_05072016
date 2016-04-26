@@ -93,7 +93,7 @@ app.controller('accountController', function($scope, accService, authService, ms
             .then(function (response) {
 
                     $scope.messages.unshift(response.data);
-                    $scope.alerts =[{msg: 'Message posted', type: 'success'}];
+                    $scope.alerts =[{msg: 'Message posted!', type: 'success'}];
                     //var tweet = $scope.messages.length + 1;
                     //var item = new String(tweet);
                     //$scope.messages.splice(0,0, item);
