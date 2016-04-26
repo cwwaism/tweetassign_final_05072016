@@ -35,7 +35,7 @@ app.controller('accountController', function($scope, accService, authService, ms
     $scope.aToken = token;
     $scope.isLoggedIn = currentUser;
     $scope.poster = poster;
-    $scope.state = "Follow"
+    $scope.state = "Follow";
     $scope.editorEnabled = false;
 
     console.log("Logged in User in acc controller " + currentUser);
@@ -43,20 +43,25 @@ app.controller('accountController', function($scope, accService, authService, ms
     console.log("User id of logged in user in acc controller " + currentUserInfo.id);
     console.log("following of logged in user in acc controller " + currentUserInfo.following);
     //var currentUserFollowing = currentUserInfo.following;
-    //console.log(currentUserFollowing);
+    console.log("Poster is " + poster);
     //console.log(currentUserFollowing.indexOf(poster))
     //console.log($scope.Following);
     console.log("Logged in user: " + currentUser);
 
     //if current user is already following poster follow button should say "following"
-    if (poster && (poster!= currentUser)){
-        var currentUserFollowing = currentUserInfo.following;
-        if (currentUserFollowing.indexOf(poster) == -1) {
-            $scope.state = "Follow";
-            console.log($scope.state);
+    if (poster){
+        if (poster==currentUser){
+            $location.path('/details');
         }
         else {
-            $scope.state = "Following";
+            var currentUserFollowing = currentUserInfo.following;
+            if (currentUserFollowing.indexOf(poster) == -1) {
+                $scope.state = "Follow";
+                console.log($scope.state);
+            }
+            else {
+                $scope.state = "Following";
+            }
         }
     }
 
@@ -132,7 +137,7 @@ app.controller('accountController', function($scope, accService, authService, ms
             .then(function(response){
                     $scope.accounts = response.data;
                     $scope.state ="Following";
-                    console.log("current user following poster");
+                    console.log(response.data + currentUser + "following " + poster);
                     return response.data;
                 },
                 function (error) {
