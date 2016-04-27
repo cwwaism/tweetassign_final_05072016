@@ -1,6 +1,3 @@
-/**
- * Created by nayna on 4/5/2016.
- */
 app.controller('accountController', function($scope, accService, authService, msgService, $location, $routeParams){
 
     var currentUser = authService.getUsername();
@@ -85,25 +82,18 @@ app.controller('accountController', function($scope, accService, authService, ms
 //post stuff
     $scope.postMessage= function(msgText)
     {
-
         console.log(msgText);
         console.log(currentUser);
-
         msgService.postMessages(currentUser, msgText, token)
             .then(function (response) {
-
                     $scope.messages.unshift(response.data);
                     $scope.alerts =[{msg: 'Message posted!', type: 'success'}];
-                    //var tweet = $scope.messages.length + 1;
-                    //var item = new String(tweet);
-                    //$scope.messages.splice(0,0, item);
                     console.log($scope.messages);
                     return response.data;
                 },
                 function (error){
                     console.log("error", error);
                 });
-
     };
 
 
@@ -143,54 +133,21 @@ app.controller('accountController', function($scope, accService, authService, ms
                 function (error) {
                     console.log('error', error);
                 });
-
-
     };
 
     $scope.saveDetails = function(fullName, emailAddress,id)
     {
         accService.updateAccount(fullName, emailAddress, id, token)
             .then(function(response) {
-
                 response.data
                 console.log (response.data);
                 $scope.accounts.fullName = response.data.fullName;
                 $scope.accounts.emailAddress = response.data.emailAddress;
-
                 },
                 function(error) {
                     console.log('error', error);
-
                 });
 
-        /*$scope.editorEnabled = true;
-        console.log($scope.editorEnabled);
-        var updatedCredentials = {
-            fullName: $scope.accounts.fullName,
-            emailAddress: $scope.accounts.emailAddress,
-        };*/
-
-
     };
-
-
-    /*if (!user && !token){
-        $location.path('/login');
-        $scope.isLoggedIn = null
-    }
-    else{
-        $location.path('/details');
-        $scope.isLoggedIn = user;
-    }*/
-
-
-   // var user = authService.getUsername();
-   // var token = authService.getToken();
-   // var user = $scope.accountHandle
-
-
-
-
-
 
 });

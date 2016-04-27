@@ -141,9 +141,6 @@ bower {
 
 }
 
-compileJava.dependsOn bowerInstall
-clean.dependsOn bowerClean
-
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
@@ -168,3 +165,6 @@ karma {
         testFiles = ['*.js']
     }
 }
+
+compileJava.dependsOn bowerInstall
+clean.dependsOn bowerClean

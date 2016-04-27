@@ -3,7 +3,7 @@
 <!--User Details-->
 <div id="userDetails">
 
-    <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alerts.splice($index, 1)">{{alert.msg}}</uib-alert>
+    <uib-alert id="msgAlert" ng-repeat="alert in alerts" type="{{alert.type}}" close="alerts.splice($index, 1)">{{alert.msg}}</uib-alert>
     <form name="form" novalidate>
     <table class="table table-hover">
     <tr>
@@ -25,13 +25,9 @@
     </tr>
     <tr ng-hide="poster">
             <td><input  id="tweet" name="msgText" ng-model="msgText" ng-minlength="1" ng-maxlength="40" required/>
-                <div ng-show="form.$submitted || form.msgText.$touched">
-                    <!--<span class="error" ng-show="form.msgText.$error.minlength">Message is too short</span>-->
-                    <span class="error" ng-show="form.msgText.$error.minlength ||form.msgText.$error.maxlength">Message between 1 and 40 characters</span>
-                </div>
+                <span id="msgError" class="error" ng-show="form.msgText.$error.maxlength">Message can be between 1 and 40 characters</span>
             </td>
-            <!--<td><a id="postMsg" ng-class="{'disabled': form.$invalid}" class="btn btn-primary btn-large" type="submit" ng-click="postMessage(msgText)">Tweet</a></td>-->
-           <td><a id="postMsg" ng-disabled="!form.$valid" class="btn btn-primary btn-large" type="submit" ng-click="postMessage(msgText)">Tweet</a></td>
+            <td><a id="postMsg" ng-class="{'disabled': form.$invalid}" class="btn btn-primary btn-large" type="submit" ng-click="postMessage(msgText)">Tweet</a></td>
     </tr>
     </table>
     </form>

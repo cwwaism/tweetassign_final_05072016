@@ -5,7 +5,6 @@ import grails.test.mixin.integration.Integration
 //import org.openqa.selenium.Alert
 import spock.lang.Ignore
 
-
 @Integration
 
 class NavigationFunctionalTestSpec extends GebSpec{
