@@ -17,10 +17,11 @@
 */
 
 body {
-    background: #fafafa;
+    /*background: #fafafa;*/
 }
 .container {
     margin: 20px;
+    width:100%;
 }
 
 
@@ -61,8 +62,8 @@ body {
 .btn:hover {
     color:#333;
     border-color:#999;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f6f6f6)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, #ffffff, #f6f6f6); /* Chrome 10+, Saf5.1+, iOS 5+ */
+    /*background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f6f6f6)); !* Saf4+, Chrome *!*/
+    /*background-image: -webkit-linear-gradient(top, #ffffff, #f6f6f6); !* Chrome 10+, Saf5.1+, iOS 5+ *!*/
     background-image:    -moz-linear-gradient(top, #ffffff, #f6f6f6); /* FF3.6 */
     background-image:     -ms-linear-gradient(top, #ffffff, #f6f6f6); /* IE10 */
     background-image:      -o-linear-gradient(top, #ffffff, #f6f6f6); /* Opera 11.10+ */
