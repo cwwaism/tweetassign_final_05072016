@@ -32,10 +32,9 @@ app.service('msgService', function($http){
     };
 
     var searchMessagesbyPoster = function(accountHandle,token) {
-        //handle = accountHandle;
-        //return $http.get('accounts/'+accountHandle +'/messages');
+
         $http.defaults.headers.post["Content-Type"] = "application/json";
-        //$http.get("/accounts/"+ currentUser)
+
         return $http({
             url: '/accounts/'+accountHandle +'/messages',
             method: "GET",

@@ -1,6 +1,7 @@
 describe('postingController', function (){
+    beforeEach(module('app'));
 
-    var $controller, $scope, authService, msgService, $httpBackend, token, currentUser, messages;
+    var $controller, $scope, authService, msgService, $httpBackend, token, currentUser, messages, $q, deferred;
     currentUser = 'u';
     token = "xyz123";
 
@@ -14,48 +15,93 @@ describe('postingController', function (){
         }
     };
 
-    beforeEach(module('app'));
-
-
-    beforeEach(inject( function($injector){
-        $controller = $injector.get('$controller');
-        $httpBackend = $injector.get('$httpBackend');
-        $scope = $injector.get('$rootScope').$new();
-        msgService = $injector.get('msgService');
-
-    }));
-
-    //beforeEach(inject(function(_$controller_,_authService_,_$rootScope_, _msgService_, _$httpBackend_ ){
-    //    $controller = _$controller_;
-    //    $rootScope = _$rootScope_;
-    //    $httpBackend = _$httpBackend_;
-    //    $scope={};
-    //    spyOn(authService, 'getUsername');
-    //    spyOn(authService, 'getToken');
+    //var msgService = {
     //
-    //    $controller('postingController', {$scope: $scope});
+    //    postMessages :function(){
     //
-    //}));
+    //    }
+    //}
+
+
+    //instantiating the controller
+    beforeEach(inject(function(_$controller_,_authService_,_$rootScope_, _msgService_, _$httpBackend_, _$q_ ){
+        $scope = _$rootScope_.$new();
+        //console.log('scope1', $scope);
+        msgService = _msgService_;
+        //authService = _authService_;
+        $controller = _$controller_;
+        $httpBackend = _$httpBackend_;
+        $q = _$q_;
+        deferred=$q.defer();
+        spyOn(msgService, 'postMessages').and.returnValue(deferred.promise);
+        $controller('postingController', {$scope:$scope, msgService:msgService});
+        $scope.postMessage('Bonjour!');
+
+    } ));
+
+
 
 
 //http://bencentra.com/code/2015/11/16/unit-testing-angularjs.html
+    //http://jsfiddle.net/onekilo79/LrAhf/
 
     describe('postMessage', function(){
-        var accountHandle = authService.getUsername();
-        var data =[{acc: 'u',  msgText: 'Bonjour'}];
 
         it('post a message', function(){
 
+            var response;
+            deferred.promise.then(function(data){
+                response= data;
+                console.log(response);
 
-            $httpBackend.expectPOST('/accounts/u/messages', {msgText: "Bonjour!"}).respond(200, data);
-            $controller('postingController', {$scope:$scope});
-            $httpBackend.flush();
+            });
+            console.log($scope.messages);
 
-            expect(typeof $scope.postMessage).toBe('function');
-            $scope.postMessage('Bonjour!');
+            //deferred.resolve('Response OK!');
+            expect($scope).toBeDefined();
+
+            //expect(typeof $scope.postMessage).toBe('function');
+
+            msgService.postMessages('u', 'Bonjour!', 'xyz123');
+            deferred.resolve([{"acc": 'u',  "msgText": 'Bonjour'}]);
+            $scope.$apply();
+
+
+
+            console.log($scope.messages);
+            console.log($scope.alerts);
+
+        });
+
+        it('error', function(){
+
+            //$controller('postingController', {$scope:$scope, msgService:msgService});
+            $scope.postMessage();
+            //msgService.postMessages('u', 'Bonjour!', 'xyz123');
+            deferred.reject();
+            $scope.$apply();
+
+            expect($scope.messages).toBe(undefined);
+
+
+        })
+
+        it('http post a message', function(){
+
+
+            $httpBackend.expectPOST("/accounts/u/messages", {"msgText": "Bonjour!"}).respond(201);
+            //$httpBackend.expectGET("/accounts/u/messages").respond(200, [{acc:"u", msgText: "Bonjour"}]);
+            //$controller('postingController', {$scope:$scope,msgService:msgService});
+            //$scope.postMessage();
+            //$httpBackend.flush();
+
+            //msgService.postMessages('u', 'Bonjour!', 'xyz123');
+
+            //expect(typeof $scope.postMessage).toBe('function');
+
 
             //spyOn(msgService, 'postMessages');
-            msgService.postMessages('u', 'Bonjour!', 'xyz123');
+
             //$httpBackend.flush();
 
 
