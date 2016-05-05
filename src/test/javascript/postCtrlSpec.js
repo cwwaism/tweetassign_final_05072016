@@ -2,8 +2,8 @@ describe('postingController', function(){
     beforeEach(module('app'));
 
     var $controller, $scope, authService, msgService, $httpBackend, token, currentUser, messages, $q, deferred;
-    var response = {};
-    response.data = [{"id":5,"msgText":"Bonjour!","dateCreated":"2016-05-05T01:42:02Z"}];
+    var response = [{"id":5,"msgText":"Bonjour!","dateCreated":"2016-05-05T01:42:02Z"}];
+    //var error = [{"status": 200, "msgError": "No messages"}]
 
     var accountHandle = "bingbong";
     var authToken = "xyz123";
@@ -39,17 +39,21 @@ describe('postingController', function(){
         });
 
         it('posts a message', function(){
-            $httpBackend.expectPOST("/accounts/bingbong/messages", {msgText: "Bonjour!"}).respond(201,response.data );
-
-
-
+            $httpBackend.expectPOST("/accounts/bingbong/messages", {msgText: "Bonjour!"}).respond(201,response );
             $scope.postMessage('Bonjour!');
             $httpBackend.flush();
-            if (response.status == 201){
-                console.log('OK');
-            }
+            expect($scope.messages).toContain(response);
+            expect($scope.alerts).toBeTruthy();
 
         });
+
+        it('errors when there is no message', function(){
+            $httpBackend.expectPOST("/accounts/bingbong/messages").respond(404);
+            $scope.postMessage();
+            $httpBackend.flush();
+            //expect($scope.messages).toBeUndefined();
+            expect($scope.alerts).toBeFalsy();
+        })
 
 
 
