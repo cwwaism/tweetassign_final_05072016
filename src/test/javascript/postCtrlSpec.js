@@ -2,13 +2,14 @@ describe('postingController', function(){
     beforeEach(module('app'));
 
     var $controller, $scope, authService, msgService, $httpBackend, token, currentUser, messages, $q, deferred;
+    var response = [{"id":5,"msgText":"Bonjour!","dateCreated":"2016-05-05T01:42:02Z"}];
 
     var authService = {
         getUsername:function(){
-            return currentUser;
+            return 'bingbong';
         },
         getToken: function(){
-            return token;
+            return 'xyz123';
         }
     };
 
@@ -17,7 +18,7 @@ describe('postingController', function(){
         $scope = _$rootScope_.$new();
         //console.log('scope1', $scope);
         msgService = _msgService_;
-        //authService = _authService_;
+        authService = _authService_;
         $controller = _$controller_;
         $httpBackend = _$httpBackend_;
         //$q = _$q_;
@@ -32,16 +33,29 @@ describe('postingController', function(){
 
         beforeEach(function(){
 
-            $controller('postingController', {$scope: $scope});
+            $scope.postMessage('Bonjour!');
+            //msgService.postMessages("bingbong", "Bonjour!", token);
+            var response = [{"id":5,"msgText":"Bonjour!","dateCreated":"2016-05-05T01:42:02Z"}];
+            //$httpBackend.expectPOST("/accounts/[object Object]/messages", {msgText: "Bonjour!"}).respond(201,{"id":5,"msgText":"Bonjour!","dateCreated":"2016-05-05T01:42:02Z"} );
 
+            //msgService.postMessages.andReturn($q.when({msgText:"Bonjour!"}));
+
+
+            //$scope.digest();
         });
 
         it('posts a message', function(){
-            $httpBackend.expectPOST("/accounts/u/messages", {"msgText": "Bonjour!"}).respond(201);
-            $httpBackend.expectGET("/accounts/u/messages").respond(200, [{acc:"u", msgText: "Bonjour"}]);
-            $controller.postMessage();
+
+            //$scope.postMessage('Bonjour!');
+            $httpBackend.expectPOST("/accounts/[object Object]/messages", {msgText: "Bonjour!"}).respond(201,{"id":5,"msgText":"Bonjour!","dateCreated":"2016-05-05T01:42:02Z"} );
+            controller = $controller('postingController', {$scope: $scope});
             $httpBackend.flush();
-            expect(msgService.postMessages).toHaveBeenCalled();
+            $scope.messages.unshift({"id":5,"msgText":"Bonjour!","dateCreated":"2016-05-05T01:42:02Z"});
+
+            //$httpBackend.expectGET("/accounts/u/messages").respond(200, [{acc:"u", msgText: "Bonjour"}]);
+            //$controller.postMessage();
+
+            //expect(con).toHaveBeenCalled();
 
         })
 
