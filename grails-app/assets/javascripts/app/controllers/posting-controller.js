@@ -2,6 +2,7 @@ app.controller('postingController', function($scope, authService, msgService){
 
     var currentUser = authService.getUsername();
     var token = authService.getToken();
+    if(typeof $scope.messages==='undefined') {$scope.messages = [];}
 
 
     $scope.postMessage = function(msgText)

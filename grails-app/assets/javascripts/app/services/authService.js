@@ -1,7 +1,7 @@
 app.service('authService', function($http){
 
-    var username ={};
-    var authToken ={};
+    var username ='';
+    var authToken ='';
     var currentUser;
 
     var Login = function (accountHandle, accountPassword) {
