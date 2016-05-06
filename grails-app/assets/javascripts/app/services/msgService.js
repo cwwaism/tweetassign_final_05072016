@@ -14,9 +14,6 @@ app.service('msgService', function($http){
 
     var searchMessages = function(searchText,token) {
 
-
-            //return  $http.get("/messages/searchText", {params: {text: searchText}});  //search by message content
-
         $http.defaults.headers.post["Content-Type"] = "application/json";
 
         return $http({
@@ -78,8 +75,6 @@ app.service('msgService', function($http){
 
 
     return {
-        //getMessages : function () {return $http.get('/messages');},
-        //searchMessages: function (paramText){return  $http.get("/messages/searchText", {params: {text: paramText}});}
         getMessages:getMessages,
         setMessages:setMessages,
         searchMessages: searchMessages,

@@ -24,7 +24,7 @@ class LoginFunctionalTestSpec extends GebSpec{
         $("#login").click()
 
         then:
-        waitFor 2, { $(".page-header").text() == "Greetings!!" }
+        waitFor { $(".page-header").text() == "Greetings!!" }
     }
 
     def 'L3: Invalid login will be rejected with an error message'(){

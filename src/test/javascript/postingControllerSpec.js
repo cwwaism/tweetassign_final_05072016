@@ -1,134 +1,61 @@
-//describe('postingController', function() //a test for account controller
-//{
-//    beforeEach(module('app'));
-//
-//    //mocks to use throughout tests
-//    var $controller, $rootScope, $scope, authService, msgService, $httpBackend, token, currentUser, messages;
-//
-//
-//    currentUser = "u";
-//    token = "xyz123";
-//    var messages =[{amsgText: 'Bonjour'}];
-//
-//    var authService = {
-//        getUsername:function(){
-//            return currentUser;
-//        },
-//        getToken: function(){
-//            return token;
-//        }
-//    };
-//
-//    var msgService = {
-//        postMessages : function() {
-//            return $httpBackend.expectPOST("/accounts/" +currentUser + "/messages", {msgText: msgText}).respond(200, messages);
-//    }
-//    };
-//
-//
-//    //instantiating the controller
-//    beforeEach(inject(function(_$controller_,_authService_,_msgService_, _$httpBackend_ ){
-//        $scope = {};
-//        msgService = _msgService_;
-//        authService = _authService_;
-//        $controller = _$controller_;
-//        $httpBackend = _$httpBackend_;
-//        //authService.getUsername();
-//        //authService.getToken();
-//
-//
-//
-//
-//    } ));
-//
-//
-//
-//    ////test in the controller
-//    //
-//    describe ('$scope.postMessage', function (){
-//
-//        beforeEach(function () {
-//            spyOn(authService, 'getUsername');
-//            spyOn(authService, 'getToken');
-//            spyOn(msgService, 'postMessages');
-//            $controller('postingController', {$scope: $scope, authService: authService, msgService: msgService});
-//        });
-//
-//
-////http://stackoverflow.com/questions/30084015/scope-alerts-undefined-when-doing-unit-testing-client-side-with-angularjs-and-j
-//
-//        it('posting a message', function () {
-//             $scope = {};
-//            var msgText = "Bonjour!";
-//            var currentUser = authService.getUsername();
-//            var token = authService.getToken()
-//            //expect(authService.getUsername).toHaveBeenCalled();
-//            //expect(authService.getToken).toHaveBeenCalled();
-//
-//            //$scope.postMessage(msgText);
-//
-//                //expect(msgService.postMessages).toHaveBeenCalled();
-//                //.then(response);
-//               // $scope.messages = response.data;
-//                //expect($scope.alerts).toBeTruthy();
-//                //expect ($scope.messages[0]).toEqual("Bonjour!")
-//
-//
-//
-//
-//            //var promise, response, result;
-//            //promise = msgService.postMessages();
-//            //
-//            //promise.then(function(data){
-//            //    result = data;
-//            //});
-//            //
-//            //response = {
-//            //    success:true,
-//            //    data:{
-//            //
-//            //    }
-//            //}
-//            //$controller.postMessage();
-//            //$scope.postMessage();
-//            //$httpBackend.expectPOST("/accounts/" +currentUser + "/messages", {msgText: "Bonjour!"}).respond(200, messages);
-//
-//            //expect(msgService.postMessages).toHaveBeenCalled();
-//            //msgService.postMessages(currentUser, "Bonjour!", token);
-//            //$httpBackend.flush();
-//            //expect($scope.messages[0]).toEqual('Bonjour!');
-//
-//
-//        });
-//
-//        //it('When logged in user posts a message, a message posted alert indicated a message has been posted', function () {
-//        //    //expect(authService.getUsername).toHaveBeenCalled();
-//        //    //expect(authService.getToken).toHaveBeenCalled();
-//        //
-//        //    msgText = 'Bonjour';
-//        //    //$scope.postMessage(msgText);
-//        //    //spyOn(msgService, 'postMessages').andReturn(fakeHttpPromise);
-//        //    // var token = spyOn(authService, 'getToken');
-//        //
-//        //    //spyOn(msgService, 'postMessages')
-//        //    //scope.postMessage('Bonjour!');
-//        //    msgService.postMessages(currentUser, msgText, token);
-//        //    //expect ($scope.alerts).toBeDefined();
-//        //
-//        //
-//        //    //expect($scope.postMessage).toBeTruthy();
-//        //});
-//
-//
-//
-//
-//    })
-//
-//
-//
-//
-//
-//
-//});
-//
-//
+describe('postingController', function(){
+    beforeEach(module('app'));
+
+    var $controller, $scope, authService, msgService, $httpBackend, token, currentUser;
+    var response = [{"id":5,"msgText":"Bonjour!","dateCreated":"2016-05-05T01:42:02Z"}];
+
+
+    var accountHandle = "bingbong";
+    var authToken = "xyz123";
+
+    var authService = {
+        setCredentials: function(){currentUser = accountHandle},
+        getUsername:function(){return currentUser;},
+        setToken:function(){token = authToken},
+        getToken: function(){return token;}
+    };
+
+    //instantiating the controller
+    beforeEach(inject(function(_$controller_,_authService_,_$rootScope_, _msgService_, _$httpBackend_ ){
+        $scope = _$rootScope_.$new();
+        msgService = _msgService_;
+        authService = _authService_;
+        $controller = _$controller_;
+        $httpBackend = _$httpBackend_;
+
+    } ));
+
+    describe('postMessage', function(){
+
+        beforeEach(function(){
+            authService.setCredentials(accountHandle);
+            authService.setToken(authToken);
+            currentUser = authService.getUsername();
+            token = authService.getToken();
+            $controller('postingController', {$scope: $scope, msgService:msgService, authService:authService });
+
+        });
+
+        it('successfully posts a message', function(){
+            $httpBackend.expectPOST("/accounts/bingbong/messages", {msgText: "Bonjour!"}).respond(201,response );
+            $scope.postMessage('Bonjour!');
+            $httpBackend.flush();
+            expect($scope.messages).toContain(response);
+            expect($scope.alerts).toBeTruthy();
+
+        });
+
+        it('errors when there is no message', function(){
+            $httpBackend.expectPOST("/accounts/bingbong/messages").respond(404);
+            $scope.postMessage();
+            $httpBackend.flush();
+            //expect($scope.messages).toBeUndefined();
+            expect($scope.alerts).toBeFalsy();
+        })
+
+
+
+    });
+
+
+});
