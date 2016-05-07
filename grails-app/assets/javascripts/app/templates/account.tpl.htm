@@ -23,11 +23,13 @@
             <td><input id="email" ng-model="accounts.emailAddress"/></td>
             <td><a id="Save" type="button" ng-show="isLoggedIn" ng-hide="poster" class="btn btn-primary btn-large" ng-click="saveDetails(accounts.fullName, accounts.emailAddress, accounts.id);editorEnabled=!editorEnabled">Save</a></td>
     </tr>
-    <tr ng-hide="poster">
+    <tr ng-controller="postingController" ng-hide="poster">
+
             <td><input  id="tweet" name="msgText" ng-model="msgText" ng-minlength="1" ng-maxlength="40" required/>
                 <span id="msgError" class="error" ng-show="form.msgText.$error.maxlength">Message can be between 1 and 40 characters</span>
             </td>
             <td><a id="postMsg" ng-class="{'disabled': form.$invalid}" class="btn btn-primary btn-large" type="submit" ng-click="postMessage(msgText)">Tweet</a></td>
+            <td><uib-alert id="msgAlert" ng-repeat="alert in alerts" type="{{alert.type}}" close="alerts.splice($index, 1)">{{alert.msg}}</uib-alert></td>
     </tr>
     </table>
     </form>

@@ -7,8 +7,9 @@
 //
 //= encoding UTF-8
 //= require jquery-2.1.3.js
-//= require ../bower/bootstrap/bootstrap.js
 //= require ../bower/angular/angular.js
+//= require ../bower/bootstrap/bootstrap.js
+//= require ../bower/angular-mocks
 //= require ../bower/angular-bootstrap/ui-bootstrap.js
 //= require ../bower/angular-bootstrap/ui-bootstrap-tpls.js
 //= require angular-route/angular-route
