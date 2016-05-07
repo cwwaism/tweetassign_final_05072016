@@ -20,7 +20,7 @@ class UserDetailFunctionalTestSpec extends GebSpec{
         waitFor { $(".page-header").text() == "Greetings!!" }
     }
 
-    def 'U1: User’s detail page will display the user’s name as well as a scrollable list of that user’s postings'(){
+    def 'U1,R5: User’s detail page will display the user’s name as well as a scrollable list of that user’s postings'(){
 
         when:
         $("#details").click()
@@ -28,7 +28,8 @@ class UserDetailFunctionalTestSpec extends GebSpec{
         then:
         waitFor 2, { $("#userDetails td")[0].text() == "Donald Trump" }
         $("#userMsg td")[0].text() == "Welcome to Minnesota"
-        $("#userMsg td")[1].text() == "It's getting better, infact it is warm."
+        $("#userMsg td")[1].text() == "Jan 25"
+        $("#userMsg td")[2].text() == "It's getting better, infact it is warm."
     }
 
     def 'U2: User’s detail page will provide a way for the logged in user to follow the detail user'(){

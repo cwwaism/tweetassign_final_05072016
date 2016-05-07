@@ -11,14 +11,12 @@
         <tr>
             <th>User</th>
             <th>Message</th>
+            <th>Date Created</th>
         </tr>
         <tr ng-repeat="m in messages">
             <td><a href="#/details/{{m.accountHandle}}" class="handle">{{m.accountHandle}}</a></td>
             <td>{{m.msgText}}</td>
+            <td>{{m.dateCreated | date: 'MMM dd'}}</td>
         </tr>
     </table>
 </div>
-
-<!--<div>
-    {{ aToken }}
-</div>-->

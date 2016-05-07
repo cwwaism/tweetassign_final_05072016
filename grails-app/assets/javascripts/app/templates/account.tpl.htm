@@ -15,7 +15,9 @@
         <td>{{accounts.fullName }}</td>
         <td>{{accounts.emailAddress}}</td>
         <td><a id="Edit" type="button" ng-show="isLoggedIn" ng-hide="poster" class="btn btn-primary btn-large" ng-click="editorEnabled=!editorEnabled">Edit</a></td>
-        <td><a id="followBtn" type="button" ng-show="poster" ng-model="Following" class="btn btn-primary btn-large" ng-click="Follow(accounts.id)">{{state}}</a></td>
+        <td>
+            <twt-follow></twt-follow>
+        </td>
     </tr>
     <tr ng-show="editorEnabled">
         <!--<input ng-model="accounts.id">{{accounts.id }}</input>-->
@@ -39,9 +41,11 @@
     <table class="table table-hover">
         <tr>
             <th>{{accounts.fullName }} 's messages</th>
+            <th>Date Created</th>
         </tr>
         <tr  ng-repeat="m in messages">
             <td>{{m.msgText}}</td>
+            <td>{{m.dateCreated | date: 'MMM dd'}}</td>
         </tr>
 
     </table>

@@ -84,7 +84,7 @@ class MessageController extends RestfulController {
             } else {
                 accountId = Account.findByAccountHandle(params.accountId)
             }
-            msg = new Message(msgText: msg, acc: accountId)
+            msg = new Message(msgText: msg, acc: accountId,dateCreated:new Date())
             msg.save()
         }
     }

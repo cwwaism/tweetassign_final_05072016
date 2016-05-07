@@ -1,7 +1,6 @@
 package tweetassign_01
 
 
-
 class Message {
 
     String msgText
@@ -10,6 +9,8 @@ class Message {
     static constraints = {
         msgText nullable: false, blank: false, size: 1..40
     }
-
+    static mapping = {
+        autoTimestamp false
+    }
 
 }

@@ -23,7 +23,7 @@ class SearchFunctionalTestSpec extends GebSpec {
     }
 
 
-    def 'S1A,S3: Provide a search box for finding messages by message poster and message contents - INPUT partial message '() {
+    def 'S1A,S3,R5: Provide a search box for finding messages by message poster and message contents - INPUT partial message '() {
 
         when:
         //perform a search by message content
@@ -33,9 +33,10 @@ class SearchFunctionalTestSpec extends GebSpec {
         then:
         waitFor { $("#searchResults td")[0].text() == "richelliot" }
         waitFor { $("#searchResults td")[1].text() == "Welcome to Atlanta" }
+        waitFor { $("#searchResults td")[2].text() == "Jan 22" }
     }
 
-    def 'S1B,S3: Provide a search box for finding messages by message poster and message contents - INPUT poster'() {
+    def 'S1B,S3,R5: Provide a search box for finding messages by message poster and message contents - INPUT poster'() {
 
         when:
         //perform a search by message content
@@ -45,6 +46,7 @@ class SearchFunctionalTestSpec extends GebSpec {
         then:
         waitFor { $("#searchResults td")[0].text() == "nayna" }
         waitFor { $("#searchResults td")[1].text() == "nayna is awesome" }
+        waitFor { $("#searchResults td")[2].text() == "Mar 16" }
     }
 
     def 'S1C,S3 Count results [rows in table] for search messages retrieved on a given message poster/text'() {
